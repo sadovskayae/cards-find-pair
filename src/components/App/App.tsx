@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { iconNames } from "../../utils/consts";
 import { shuffle } from "../../utils/helpers";
 import Card from "../Card/Card";
+import Header from "../Header/Header";
 import "./App.scss";
 
 const cards = shuffle(iconNames.concat(iconNames));
@@ -10,11 +11,14 @@ function App() {
   const [disableCardClick, setDisableCardClick] = useState(false);
   const [completedCards, setCompletedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
-  const win = completedCards.length === cards.length ? true : false;
+  const [startTimer, setStartTimer] = useState(false);
 
   const handleOnClick = (index: number) => {
     if (disableCardClick) {
       return;
+    }
+    if (!startTimer) {
+      setStartTimer(true);
     }
     setMoves(i => i+1);
     if (openPair.length === 0) {
@@ -26,6 +30,9 @@ function App() {
         setTimeout(() => {
           setCompletedCards([...completedCards, index, openPair[0]]);
         }, 500);
+        if (completedCards.length === cards.length - 2) {
+          setStartTimer(false);
+        }
       }
       setTimeout(() => {
         setOpenPair([]);
@@ -36,11 +43,7 @@ function App() {
 
   return (
     <div className="app"> 
-      <div>
-        <div>{win && 'Congratulations! You beat the game!'}</div>
-        <div>{`Moves: ${moves}`}</div>
-        <div>{`Time: `}</div>
-      </div>
+      <Header win={completedCards.length === cards.length} moves={moves} startTimer={startTimer}/>
       <div className="field">
         {cards.map((name, index) => (
           <Card

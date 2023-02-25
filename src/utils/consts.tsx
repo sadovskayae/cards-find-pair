@@ -7,8 +7,8 @@ export const iconNames = [
   "savings",
   "flutter_dash",
   "flight_land",
-  "blender", */
-/*   "yard",
+  "blender",
+  "yard",
   "train",
   "music_note",
   "skateboarding",
