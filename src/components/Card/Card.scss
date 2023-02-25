@@ -1,0 +1,35 @@
+.material-icons.md-48 {
+  font-size: 48px;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  transform-style: preserve-3d;
+  position: relative;
+  min-height: 100px;
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none; 
+  
+  /*   &:hover {
+    transform: rotateY(180deg);
+  } */
+  &.card_opened {
+    transform: rotateY(180deg);
+  }
+  &.card_hidden {
+    visibility: hidden;
+  }
+  .card__card-side {
+    backface-visibility: hidden;
+    position: absolute;
+    &.card__card-side_back {
+      transform: rotateY(180deg);
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.app {
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 600px;
+  justify-content: center;
+  align-content: center;
+  gap: 5px 5px;
+}
