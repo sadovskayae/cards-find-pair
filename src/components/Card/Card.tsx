@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import React from "react";
+import { config } from "../../utils/consts";
 import "./Card.scss";
+import ICard from "./types";
 
 const Card = ({
   iconName,
@@ -8,23 +10,17 @@ const Card = ({
   hidden,
   opened,
   onClick,
-}: {
-  iconName: string;
-  index: number;
-  hidden: boolean;
-  opened: boolean;
-  onClick: (index: number) => void;
-}) => {
+}: ICard) => {
   const handleOnClick = () => !opened && !hidden && onClick(index);
+  const cardClass = classNames(config.card.classModifiers.default, {
+    [config.card.classModifiers.hidden]: hidden,
+    [config.card.classModifiers.open]: opened
+  });
 
   return (
-    <div className={classNames('card', {
-      'card_hidden': hidden,
-      'card_opened': opened
-    })}
-    onClick={handleOnClick}>
+    <div role={config.card.ariaRole} className={cardClass} onClick={handleOnClick}>
       <div className="card__card-side card__card-side_front">
-        <span className="material-icons md-48">question_mark</span>
+        <span className="material-icons md-48">{config.card.backSideIcon}</span>
       </div>
       <div className="card__card-side card__card-side_back">
         <span className="material-icons md-48">{iconName}</span>

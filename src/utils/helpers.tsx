@@ -8,3 +8,7 @@ export const shuffle = (arr: string[]) => {
   }
   return result
 }
+
+export const cardContainsClass = (node: HTMLElement, className: string) => {
+  return node?.parentElement?.parentElement?.className?.includes(className);
+}
