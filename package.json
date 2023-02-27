@@ -26,11 +26,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test  --watchAll" ,
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.ts src/**/*.tsx",
     "lint:fix": "npm run lint -- --fix",
-    "test:coverage": "npm run test -- --coverage --watchAll=false"
+    "test:coverage": "npm run test -- --coverage"
   },
   "browserslist": {
     "production": [

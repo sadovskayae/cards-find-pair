@@ -9,6 +9,7 @@ export const config = {
     win: 'Congratulations! You beat the game!',
     moves: 'Moves:',
     timer: 'Time:',
+    bestResult: 'Your best result: ',
   },
   card: {
     ariaRole: 'button',
@@ -19,12 +20,15 @@ export const config = {
     },
     backSideIcon: 'question_mark',
   },
+  record: {
+    localStorageName: 'record',
+  },
 };
 
 export const iconNames = [
   'fingerprint',
   'star_rate',
-  'face',
+/*   'face',
   'language',
   'lightbulb',
   'savings',
@@ -39,7 +43,7 @@ export const iconNames = [
   'catching_pokemon',
   'interests',
   'rowing',
-  'tsunami',
+  'tsunami', */
 ];
 
 export const testIconNames = ['fingerprint', 'face', 'fingerprint', 'face'];
