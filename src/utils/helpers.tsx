@@ -6,9 +6,9 @@ export const shuffle = (arr: string[]) => {
     result[i] = result[j];
     result[j] = temp;
   }
-  return result
-}
+  return result;
+};
 
 export const cardContainsClass = (node: HTMLElement, className: string) => {
   return node?.parentElement?.parentElement?.className?.includes(className);
-}
+};

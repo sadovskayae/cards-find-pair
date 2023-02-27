@@ -14,8 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  user-select: none; 
-  
+  user-select: none;
+
   &.card_opened {
     transform: rotateY(180deg);
   }
@@ -35,7 +35,7 @@
   .material-icons.size {
     font-size: 36px;
   }
-  
+
   .card {
     min-height: 88px;
     min-width: 70px;
