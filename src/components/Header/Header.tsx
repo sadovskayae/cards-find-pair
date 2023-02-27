@@ -30,7 +30,7 @@ const Header = ({ win, moves, startTimer }: IHeader) => {
             payload = {time: timer, move: moves};
           } else if (time > timer) {
             payload = {time: timer, move};
-          } else if (move > moves) {
+          } else {
             payload = {time, move: moves};
           } 
           setRecords(payload);

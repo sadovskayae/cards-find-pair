@@ -28,7 +28,7 @@ export const config = {
 export const iconNames = [
   'fingerprint',
   'star_rate',
-/*   'face',
+  'face',
   'language',
   'lightbulb',
   'savings',
@@ -43,7 +43,7 @@ export const iconNames = [
   'catching_pokemon',
   'interests',
   'rowing',
-  'tsunami', */
+  'tsunami',
 ];
 
 export const testIconNames = ['fingerprint', 'face', 'fingerprint', 'face'];
