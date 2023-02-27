@@ -5,6 +5,7 @@ export const config = {
     clearPair: 1500
   },
   headerMessage: {
+    name: 'Find pair',
     win: 'Congratulations! You beat the game!',
     moves: 'Moves:',
     timer: 'Time:'

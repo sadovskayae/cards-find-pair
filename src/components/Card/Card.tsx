@@ -20,10 +20,10 @@ const Card = ({
   return (
     <div role={config.card.ariaRole} className={cardClass} onClick={handleOnClick}>
       <div className="card__card-side card__card-side_front">
-        <span className="material-icons md-48">{config.card.backSideIcon}</span>
+        <span className="material-icons size">{config.card.backSideIcon}</span>
       </div>
       <div className="card__card-side card__card-side_back">
-        <span className="material-icons md-48">{iconName}</span>
+        <span className="material-icons size">{iconName}</span>
       </div>
     </div>
   );

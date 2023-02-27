@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { config } from "../../utils/consts";
 import IHeader from "./types";
+import "./Header.scss";
 
 const Header = ({
   win,
@@ -19,6 +20,7 @@ const Header = ({
 
   return (
     <div className='header'>
+      <div className='header__title'>{config.headerMessage.name}</div>
       <div className='header__win-message'>{win && config.headerMessage.win}</div>
       <div className='header__moves'>{`${config.headerMessage.moves} ${moves}`}</div>
       <div className='header__timer'>{`${config.headerMessage.timer} ${timer}`}</div>

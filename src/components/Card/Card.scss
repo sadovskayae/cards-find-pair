@@ -1,4 +1,4 @@
-.material-icons.md-48 {
+.material-icons.size {
   font-size: 48px;
 }
 
@@ -16,9 +16,6 @@
   align-items: center;
   user-select: none; 
   
-  /*   &:hover {
-    transform: rotateY(180deg);
-  } */
   &.card_opened {
     transform: rotateY(180deg);
   }
@@ -31,5 +28,23 @@
     &.card__card-side_back {
       transform: rotateY(180deg);
     }
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .material-icons.size {
+    font-size: 36px;
+  }
+  
+  .card {
+    min-height: 88px;
+    min-width: 70px;
+  }
+}
+
+@media only screen and (max-width: 455px) {
+  .card {
+    min-height: 75px;
+    min-width: 60px;
   }
 }
