@@ -1,3 +1,5 @@
-export default interface IApp {
-  cards: string[];
+import { CardData } from "../../utils/types";
+
+export default interface AppProps {
+  cards: CardData[];
 }

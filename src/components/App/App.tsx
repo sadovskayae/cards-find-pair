@@ -1,21 +1,64 @@
-import React, { useState } from 'react';
-import { config } from '../../utils/consts';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useState } from 'react';
+import { config} from '../../utils/consts';
 import Card from '../Card/Card';
 import Header from '../Header/Header';
 import './App.scss';
-import IApp from './types';
+import { CardData } from '../../utils/types';
+import AppProps from './types';
 
-const App = ({ cards }: IApp) => {
-  const [openPair, setOpenPair] = useState<number[]>([]);
+const App = ({ cards }: AppProps) => {
+  const [openPair, setOpenPair] = useState<CardData[]>([]);
   const [disableCardClick, setDisableCardClick] = useState(false);
-  const [completedCards, setCompletedCards] = useState<number[]>([]);
+  const [completedCards, setCompletedCards] = useState<CardData[]>([]);
   const [moves, setMoves] = useState(0);
   const [startTimer, setStartTimer] = useState(false);
+  const [lastCardClicked, setLastCardClicked] = useState<CardData>();
+
+  useEffect(() => {
+    if (lastCardClicked) {
+      if (disableCardClick || openPair.includes(lastCardClicked)) {
+        setLastCardClicked(undefined);
+        return;
+      }
+      if (!startTimer) {
+        setStartTimer(true);
+      }
+      setMoves((i) => i + 1);
+      checkPair(lastCardClicked);
+    }
+  }, [lastCardClicked]);
+
+
+  const handleOnClick = useCallback((card: CardData) => { 
+    setLastCardClicked(card);
+  }, []);
+
+  const isHidden = useCallback((card: CardData) => !!(completedCards.find(x => x.id === card.id)), [completedCards]);
+  const isOpened = (card: CardData) => !!(openPair.find(x => x.id === card.id));
 
   const checkWin = () => {
     if (completedCards.length === cards.length - 2) {
       setStartTimer(false);
     }
+  };
+
+  const checkPair = (card: CardData) => {
+    if (openPair.length === 0) {
+      setOpenPair([card]);
+    } else {
+      const isSameCard = openPair[0]?.name === card?.name; 
+      setDisableCardClick(true);
+      setOpenPair([...openPair, card]);
+      if (isSameCard) {
+        setTimeout(() => {
+          setCompletedCards([...completedCards, card, openPair[0]]);
+        }, config.delay.completedCards);
+        checkWin();
+      }
+      clearCards(isSameCard);
+    }
+    setLastCardClicked(undefined);
   };
 
   const clearCards = (isSameCard: boolean) => {
@@ -28,34 +71,6 @@ const App = ({ cards }: IApp) => {
     );
   };
 
-  const checkPair = (index: number) => {
-    if (openPair.length === 0) {
-      setOpenPair([index]);
-    } else {
-      const isSameCard = cards[index] === cards[openPair[0]];
-      setDisableCardClick(true);
-      setOpenPair([...openPair, index]);
-      if (isSameCard) {
-        setTimeout(() => {
-          setCompletedCards([...completedCards, index, openPair[0]]);
-        }, config.delay.completedCards);
-        checkWin();
-      }
-      clearCards(isSameCard);
-    }
-  };
-
-  const handleOnClick = (index: number) => {
-    if (disableCardClick || openPair.includes(index)) {
-      return;
-    }
-    if (!startTimer) {
-      setStartTimer(true);
-    }
-    setMoves((i) => i + 1);
-    checkPair(index);
-  };
-
   return (
     <div className='app'>
       <Header
@@ -64,13 +79,13 @@ const App = ({ cards }: IApp) => {
         startTimer={startTimer}
       />
       <div className='field'>
-        {cards.map((name, index) => (
+        {cards.map((card, index) => (
           <Card
-            iconName={name}
-            key={index}
+            key={card.id}
+            card={card}
             index={index}
-            hidden={completedCards.includes(index)}
-            opened={openPair.includes(index)}
+            hidden={isHidden(card)}
+            opened={isOpened(card)}
             onClick={handleOnClick}
           />
         ))}

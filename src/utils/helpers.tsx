@@ -1,13 +1,25 @@
-export const shuffle = (arr: string[]) => {
-  const result = [...arr];
-  for (let i = result.length - 1; i > 0; i--) {
+import { v4 as uuidv4 } from 'uuid';
+import { CardData } from './types';
+
+export const shuffle = (arr: CardData[]): CardData[] => {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = result[i];
-    result[i] = result[j];
-    result[j] = temp;
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
   }
-  return result;
+  return arr;
 };
+
+export const getCards = (cards: string[]) => {
+  const newCards = shuffle([...cards,...cards].map((card) => {
+    return {
+      name: card,
+      id: uuidv4()
+    }
+  }));
+  return newCards;
+}
 
 export const cardContainsClass = (node: HTMLElement, className: string) => {
   return node?.parentElement?.parentElement?.className?.includes(className);
