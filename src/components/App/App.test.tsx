@@ -2,11 +2,11 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
-import { config, testIconNames } from '../../utils/consts';
+import { config, testCards } from '../../utils/consts';
 import { KeyValue } from '../../utils/types';
 import { cardContainsClass } from '../../utils/helpers';
 
-const testCardNameRegex = new RegExp(testIconNames[1], 'i');
+const testCardNameRegex = new RegExp(testCards[1]?.name, 'i');
 const testCardRole = new RegExp(config.card.ariaRole, 'i');
 
 beforeEach(() => {
@@ -18,21 +18,21 @@ afterEach(() => {
 });
 
 test('all cards have pairs', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const cards: KeyValue = {};
-  testIconNames.forEach((item) => {
-    cards[item] = !cards[item] ? 1 : cards[item] + 1;
+  testCards.forEach((item) => {
+    cards[item?.name] = !cards[item?.name] ? 1 : cards[item?.name] + 1;
   });
   let isPaired = Object.values(cards).every((item) => item === 2);
   expect(isPaired).toBeTruthy();
 });
 
 test('there are at least 4 cards', () => {
-  expect(testIconNames.length).toBeGreaterThanOrEqual(4);
+  expect(testCards.length).toBeGreaterThanOrEqual(4);
 });
 
 test('increase moves by 1 on same card', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const firstCard = screen.getAllByText(testCardNameRegex)[0];
   expect(firstCard).toBeInTheDocument();
   fireEvent.click(firstCard);
@@ -45,7 +45,7 @@ test('increase moves by 1 on same card', () => {
 });
 
 test('start timer by click', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const card = screen.getAllByText(testCardNameRegex)[0];
   fireEvent.click(card);
   const timerText = screen.getByText(
@@ -57,7 +57,7 @@ test('start timer by click', () => {
 });
 
 test('set open-card class once per card', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const card = screen.getAllByText(testCardNameRegex)[0];
   const isCardOpened0 = cardContainsClass(
     card,
@@ -79,7 +79,7 @@ test('set open-card class once per card', () => {
 });
 
 test('check equal pair', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const cards = screen.getAllByText(testCardNameRegex);
   const card1 = cards[0];
   const card2 = cards[1];
@@ -106,7 +106,7 @@ test('check equal pair', () => {
 });
 
 test('check non-equal pair', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const cards = screen.getAllByRole(testCardRole);
   const card1 = cards[0];
   const card2 = cards[1];
@@ -132,7 +132,7 @@ test('check non-equal pair', () => {
 });
 
 test('click on 3rd card does not open it while pair active', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const cards = screen.getAllByRole(testCardRole);
   cards.forEach((element) => {
     fireEvent.click(element);
@@ -144,7 +144,7 @@ test('click on 3rd card does not open it while pair active', () => {
 });
 
 test('check win message', async () => {
-  render(<App cards={['face', 'face']} />);
+  render(<App cards={[testCards[1], testCards[3]]} />);
   const cards = screen.getAllByText(testCardNameRegex);
   const card1 = cards[0];
   const card2 = cards[1];
@@ -157,7 +157,7 @@ test('check win message', async () => {
 });
 
 test('set open-card class by enter', () => {
-  render(<App cards={testIconNames} />);
+  render(<App cards={testCards} />);
   const cards = screen.getAllByText(testCardNameRegex);
   const card = cards[0];
   const isCardOpened0 = cardContainsClass(

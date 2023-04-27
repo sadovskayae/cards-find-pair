@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
 import './index.scss';
 import { iconNames } from './utils/consts';
-import { shuffle } from './utils/helpers';
+import { getCards } from './utils/helpers';
 
-const cards = shuffle(iconNames.concat(iconNames));
+const cards = getCards(iconNames);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

@@ -46,4 +46,9 @@ export const iconNames = [
   'tsunami',
 ];
 
-export const testIconNames = ['fingerprint', 'face', 'fingerprint', 'face'];
+export const testCards = [
+  {name:'fingerprint', id:'1'}, 
+  {name: 'face', id: '2'}, 
+  {name:'fingerprint', id:'3'}, 
+  {name: 'face', id: '4'}
+];

@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { KeyboardEvent } from 'react';
+import React, { KeyboardEvent, memo } from 'react';
 import { config } from '../../utils/consts';
 import './Card.scss';
-import ICard from './types';
+import CardProps from './types';
 
-const Card = ({ iconName, index, hidden, opened, onClick }: ICard) => {
-  const handleOnClick = () => !opened && !hidden && onClick(index);
+const Card = memo(({ card, index, hidden, opened, onClick }: CardProps) => {
+  const handleOnClick = () => !opened && !hidden && onClick(card);
   const onEnterDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       handleOnClick();
@@ -28,10 +28,10 @@ const Card = ({ iconName, index, hidden, opened, onClick }: ICard) => {
         <span className='material-icons size'>{config.card.backSideIcon}</span>
       </div>
       <div className='card__card-side card__card-side_back'>
-        <span className='material-icons size'>{iconName}</span>
+        <span className='material-icons size'>{card?.name}</span>
       </div>
     </div>
   );
-};
+});
 
 export default Card;

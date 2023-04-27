@@ -1,7 +1,9 @@
-export default interface ICard {
-  iconName: string;
+import { CardData } from "../../utils/types";
+
+export default interface CardProps {
+  card: CardData;
   index: number;
   hidden: boolean;
   opened: boolean;
-  onClick: (index: number) => void;
+  onClick: (card: CardData) => void;
 }
