@@ -1,10 +1,5 @@
-export interface IHeader {
+export interface HeaderProps {
   win: boolean;
   moves: number;
   startTimer: boolean;
-}
-
-export interface IBestValue {
-  move: number;
-  time: number;
 }

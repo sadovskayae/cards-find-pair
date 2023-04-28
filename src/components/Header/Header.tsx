@@ -1,51 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { config } from '../../utils/consts';
-import { IHeader, IBestValue } from './types';
+import { HeaderProps } from './types';
 import './Header.scss';
+import { useCheckRecord } from '../../hooks/useCheckRecord';
+import { useTimer } from '../../hooks/useTimer';
 
-const Header = ({ win, moves, startTimer }: IHeader) => {
-  const [timer, setTimer] = useState(0);
-  const [bestValue, setBestValue] = useState<IBestValue>({time: 0, move: 0});
-  const intervalRef = useRef<NodeJS.Timeout>();
-
-  useEffect(() => {
-    if (startTimer) {
-      intervalRef.current = setInterval(() => setTimer((i) => i + 1), 1000);
-    }
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [startTimer]);
-
-  useEffect(() => {
-    if (win) {
-      const record = localStorage.getItem(config.record.localStorageName);
-      if (record) {
-        const {time, move} = JSON.parse(record);
-        if (time <= timer && move <= moves) {
-          setBestValue({time, move});
-        } else {
-          let payload: IBestValue = bestValue;
-          if (time > timer && move > moves) {
-            payload = {time: timer, move: moves};
-          } else if (time > timer) {
-            payload = {time: timer, move};
-          } else {
-            payload = {time, move: moves};
-          } 
-          setRecords(payload);
-        }
-      } else {
-        setRecords({time: timer, move: moves});
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [win]);
-
-  const setRecords = (payload: IBestValue) => {
-    localStorage.setItem(config.record.localStorageName, JSON.stringify(payload));
-    setBestValue(payload);
-  }
+const Header = ({ win, moves, startTimer }: HeaderProps) => {
+  const timer = useTimer(startTimer);
+  const bestValue = useCheckRecord(win, timer, moves);
 
     return (
     <div className='header'>

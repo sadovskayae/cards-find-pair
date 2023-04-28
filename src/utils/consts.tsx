@@ -47,8 +47,8 @@ export const iconNames = [
 ];
 
 export const testCards = [
-  {name:'fingerprint', id:'1'}, 
-  {name: 'face', id: '2'}, 
-  {name:'fingerprint', id:'3'}, 
-  {name: 'face', id: '4'}
+  { name: 'fingerprint', id: '1' },
+  { name: 'face', id: '2' },
+  { name: 'fingerprint', id: '3' },
+  { name: 'face', id: '4' },
 ];

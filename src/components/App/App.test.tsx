@@ -52,8 +52,10 @@ test('start timer by click', () => {
     new RegExp(config.headerMessage.timer, 'i')
   );
 
-  act(() => {jest.advanceTimersByTime(1000);});
-  expect(timerText).toHaveTextContent('1')
+  act(() => {
+    jest.advanceTimersByTime(1000);
+  });
+  expect(timerText).toHaveTextContent('1');
 });
 
 test('set open-card class once per card', () => {
@@ -96,7 +98,9 @@ test('check equal pair', () => {
   expect(isCard1Opened).toBeTruthy();
   expect(isCard2Opened).toBeTruthy();
 
-  act(() => {jest.advanceTimersByTime(config.delay.clearEqualPair);});
+  act(() => {
+    jest.advanceTimersByTime(config.delay.clearEqualPair);
+  });
   const c1 = card1?.parentElement?.parentElement?.className;
   const c2 = card2?.parentElement?.parentElement?.className;
   expect(c1).toContain(config.card.classModifiers.hidden);
@@ -122,8 +126,10 @@ test('check non-equal pair', () => {
   expect(isCard1Opened).toBeTruthy();
   expect(isCard2Opened).toBeTruthy();
 
-  act(() => {jest.advanceTimersByTime(config.delay.clearPair);});
-  const c1 = card1.className; 
+  act(() => {
+    jest.advanceTimersByTime(config.delay.clearPair);
+  });
+  const c1 = card1.className;
   const c2 = card2.className;
   expect(c1).not.toContain(config.card.classModifiers.hidden);
   expect(c1).not.toContain(config.card.classModifiers.open);
@@ -151,7 +157,9 @@ test('check win message', async () => {
   fireEvent.click(card1);
   fireEvent.click(card2);
 
-  act(() => {jest.advanceTimersByTime(1000);});
+  act(() => {
+    jest.advanceTimersByTime(1000);
+  });
   const win = screen.queryByText(new RegExp(config.headerMessage.win, 'i'));
   expect(win).toHaveTextContent(config.headerMessage.win);
 });
@@ -165,13 +173,13 @@ test('set open-card class by enter', () => {
     config.card.classModifiers.open
   );
   expect(isCardOpened0).toBeFalsy();
-  fireEvent.keyDown(card, {key: 'Enter', code: 'Enter', charCode: 13});
+  fireEvent.keyDown(card, { key: 'Enter', code: 'Enter', charCode: 13 });
   const isCardOpened1 = cardContainsClass(
     card,
     config.card.classModifiers.open
   );
   expect(isCardOpened1).toBeTruthy();
-  fireEvent.keyDown(cards[1], {key: 'A', code: 'KeyA'});
+  fireEvent.keyDown(cards[1], { key: 'A', code: 'KeyA' });
   const isCardOpenedByA = cardContainsClass(
     cards[1],
     config.card.classModifiers.open

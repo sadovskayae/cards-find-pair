@@ -41,12 +41,21 @@ test('render record from localstorage', () => {
   const recordValue = 2;
   const currentValue = 4;
   const spy = jest.spyOn(Storage.prototype, 'setItem');
-  localStorage.setItem(config.record.localStorageName, JSON.stringify({move: recordValue, time: recordValue}));
-  const {rerender} = render(<Header win={false} moves={defaultNumber} startTimer={true}/>);
-  
-  act(() => {jest.advanceTimersByTime(currentValue*1000);});
-  rerender(<Header win={true} moves={currentValue} startTimer={false}/>);
-  const bestScore = screen.getAllByText(new RegExp(config.headerMessage.bestResult, "i"));
+  localStorage.setItem(
+    config.record.localStorageName,
+    JSON.stringify({ move: recordValue, time: recordValue })
+  );
+  const { rerender } = render(
+    <Header win={false} moves={defaultNumber} startTimer={true} />
+  );
+
+  act(() => {
+    jest.advanceTimersByTime(currentValue * 1000);
+  });
+  rerender(<Header win={true} moves={currentValue} startTimer={false} />);
+  const bestScore = screen.getAllByText(
+    new RegExp(config.headerMessage.bestResult, 'i')
+  );
   expect(localStorage.setItem).toHaveBeenCalled();
   expect(bestScore[0]).toHaveTextContent(recordValue.toString());
   expect(bestScore[1]).toHaveTextContent(recordValue.toString());
@@ -57,12 +66,21 @@ test('render new record', () => {
   const recordValue = 6;
   const currentValue = 4;
   const spy = jest.spyOn(Storage.prototype, 'setItem');
-  localStorage.setItem(config.record.localStorageName, JSON.stringify({move: recordValue, time: recordValue}));
-  const {rerender} = render(<Header win={false} moves={defaultNumber} startTimer={true}/>);
-  
-  act(() => {jest.advanceTimersByTime(currentValue*1000);});
-  rerender(<Header win={true} moves={currentValue} startTimer={false}/>);
-  const bestScore = screen.getAllByText(new RegExp(config.headerMessage.bestResult, "i"));
+  localStorage.setItem(
+    config.record.localStorageName,
+    JSON.stringify({ move: recordValue, time: recordValue })
+  );
+  const { rerender } = render(
+    <Header win={false} moves={defaultNumber} startTimer={true} />
+  );
+
+  act(() => {
+    jest.advanceTimersByTime(currentValue * 1000);
+  });
+  rerender(<Header win={true} moves={currentValue} startTimer={false} />);
+  const bestScore = screen.getAllByText(
+    new RegExp(config.headerMessage.bestResult, 'i')
+  );
   expect(bestScore[0]).toHaveTextContent(currentValue.toString());
   expect(bestScore[1]).toHaveTextContent(currentValue.toString());
   spy.mockRestore();
@@ -72,12 +90,21 @@ test('render just new time record', () => {
   const recordValue = 6;
   const currentValue = 4;
   const spy = jest.spyOn(Storage.prototype, 'setItem');
-  localStorage.setItem(config.record.localStorageName, JSON.stringify({move: recordValue, time: recordValue}));
-  const {rerender} = render(<Header win={false} moves={defaultNumber} startTimer={true}/>);
-  
-  act(() => {jest.advanceTimersByTime(currentValue*1000);});
-  rerender(<Header win={true} moves={recordValue} startTimer={false}/>);
-  const bestScore = screen.getAllByText(new RegExp(config.headerMessage.bestResult, "i"));
+  localStorage.setItem(
+    config.record.localStorageName,
+    JSON.stringify({ move: recordValue, time: recordValue })
+  );
+  const { rerender } = render(
+    <Header win={false} moves={defaultNumber} startTimer={true} />
+  );
+
+  act(() => {
+    jest.advanceTimersByTime(currentValue * 1000);
+  });
+  rerender(<Header win={true} moves={recordValue} startTimer={false} />);
+  const bestScore = screen.getAllByText(
+    new RegExp(config.headerMessage.bestResult, 'i')
+  );
   expect(bestScore[0]).toHaveTextContent(recordValue.toString());
   expect(bestScore[1]).toHaveTextContent(currentValue.toString());
   spy.mockRestore();
@@ -88,12 +115,21 @@ test('render just new moves record', () => {
   const recordValue = 6;
   const currentValue = 4;
   const spy = jest.spyOn(Storage.prototype, 'setItem');
-  localStorage.setItem(config.record.localStorageName, JSON.stringify({move: recordValue, time: recordValue}));
-  const {rerender} = render(<Header win={false} moves={defaultNumber} startTimer={true}/>);
-  
-  act(() => {jest.advanceTimersByTime(recordValue*1500);});
-  rerender(<Header win={true} moves={currentValue} startTimer={false}/>);
-  const bestScore = screen.getAllByText(new RegExp(config.headerMessage.bestResult, "i"));
+  localStorage.setItem(
+    config.record.localStorageName,
+    JSON.stringify({ move: recordValue, time: recordValue })
+  );
+  const { rerender } = render(
+    <Header win={false} moves={defaultNumber} startTimer={true} />
+  );
+
+  act(() => {
+    jest.advanceTimersByTime(recordValue * 1500);
+  });
+  rerender(<Header win={true} moves={currentValue} startTimer={false} />);
+  const bestScore = screen.getAllByText(
+    new RegExp(config.headerMessage.bestResult, 'i')
+  );
   expect(bestScore[0]).toHaveTextContent(currentValue.toString());
   expect(bestScore[1]).toHaveTextContent(recordValue.toString());
   spy.mockRestore();

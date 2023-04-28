@@ -1,4 +1,4 @@
-import { CardData } from "../../utils/types";
+import { CardData } from '../../utils/types';
 
 export default interface AppProps {
   cards: CardData[];

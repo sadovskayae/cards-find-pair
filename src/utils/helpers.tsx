@@ -12,14 +12,16 @@ export const shuffle = (arr: CardData[]): CardData[] => {
 };
 
 export const getCards = (cards: string[]) => {
-  const newCards = shuffle([...cards,...cards].map((card) => {
-    return {
-      name: card,
-      id: uuidv4()
-    }
-  }));
+  const newCards = shuffle(
+    [...cards, ...cards].map((card) => {
+      return {
+        name: card,
+        id: uuidv4(),
+      };
+    })
+  );
   return newCards;
-}
+};
 
 export const cardContainsClass = (node: HTMLElement, className: string) => {
   return node?.parentElement?.parentElement?.className?.includes(className);
