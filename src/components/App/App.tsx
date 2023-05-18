@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from 'react';
-import { config} from '../../utils/consts';
+import React, { useCallback, useState } from 'react';
+import { config } from '../../utils/consts';
 import Card from '../Card/Card';
 import Header from '../Header/Header';
 import './App.scss';
@@ -13,29 +12,14 @@ const App = ({ cards }: AppProps) => {
   const [completedCards, setCompletedCards] = useState<CardData[]>([]);
   const [moves, setMoves] = useState(0);
   const [startTimer, setStartTimer] = useState(false);
-  const [lastCardClicked, setLastCardClicked] = useState<CardData>();
+  const [lastCardClicked, setLastCardClicked] = useState<CardData | undefined>();
 
-  useEffect(() => {
-    if (lastCardClicked) {
-      if (disableCardClick || openPair.includes(lastCardClicked)) {
-        setLastCardClicked(undefined);
-        return;
-      }
-      if (!startTimer) {
-        setStartTimer(true);
-      }
-      setMoves((i) => i + 1);
-      checkPair(lastCardClicked);
-    }
-  }, [lastCardClicked]);
-
-
-  const handleOnClick = useCallback((card: CardData) => { 
+  const handleOnClick = useCallback((card: CardData) => {
     setLastCardClicked(card);
   }, []);
 
-  const isHidden = useCallback((card: CardData) => !!(completedCards.find(x => x.id === card.id)), [completedCards]);
-  const isOpened = (card: CardData) => !!(openPair.find(x => x.id === card.id));
+  const isHidden = useCallback((card: CardData) => !!completedCards.find(x => x.id === card.id), [completedCards]);
+  const isOpened = (card: CardData) => !!openPair.find(x => x.id === card.id);
 
   const checkWin = () => {
     if (completedCards.length === cards.length - 2) {
@@ -43,11 +27,21 @@ const App = ({ cards }: AppProps) => {
     }
   };
 
+  const clearCards = (isSameCard: boolean) => {
+    setTimeout(
+      () => {
+        setOpenPair([]);
+        setDisableCardClick(false);
+      },
+      isSameCard ? config.delay.clearEqualPair : config.delay.clearPair
+    );
+  };
+
   const checkPair = (card: CardData) => {
     if (openPair.length === 0) {
       setOpenPair([card]);
     } else {
-      const isSameCard = openPair[0]?.name === card?.name; 
+      const isSameCard = openPair[0]?.name === card?.name;
       setDisableCardClick(true);
       setOpenPair([...openPair, card]);
       if (isSameCard) {
@@ -61,15 +55,17 @@ const App = ({ cards }: AppProps) => {
     setLastCardClicked(undefined);
   };
 
-  const clearCards = (isSameCard: boolean) => {
-    setTimeout(
-      () => {
-        setOpenPair([]);
-        setDisableCardClick(false);
-      },
-      isSameCard ? config.delay.clearEqualPair : config.delay.clearPair
-    );
-  };
+  if (lastCardClicked) {
+    if (disableCardClick || openPair.includes(lastCardClicked)) {
+      setLastCardClicked(undefined);
+    } else {
+      if (!startTimer) {
+        setStartTimer(true);
+      }
+      setMoves((i) => i + 1);
+      checkPair(lastCardClicked);
+    }
+  }
 
   return (
     <div className='app'>
