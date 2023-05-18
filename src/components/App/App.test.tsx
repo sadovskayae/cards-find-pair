@@ -19,7 +19,7 @@ afterEach(() => {
 
 test('all cards have pairs', () => {
   render(<App cards={testCards} />);
-  const cards: KeyValue = {};
+  const cards: KeyValue<number> = {};
   testCards.forEach((item) => {
     cards[item?.name] = !cards[item?.name] ? 1 : cards[item?.name] + 1;
   });

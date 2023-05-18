@@ -5,7 +5,6 @@ import { config } from '../utils/consts';
 
 export const useCheckRecord = (win: boolean, timer: number, moves: number) => {
   const [bestValue, setBestValue] = useState<IBestValue>({ time: 0, move: 0 });
-
   useEffect(() => {
     if (win) {
       const record = localStorage.getItem(config.record.localStorageName);
